@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raff | Shop Menu</title>
+    <link rel="shortcut icon" href="./flower/images/raffneptune.jpg" type="image/x-icon" />
+    <!-- Add Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: auto;
+            position: relative;
+            transition: background 0.5s, color 0.5s;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Mode Terang */
+        body.light-mode {
+            background-color: #ffffff;
+            color: #000;
+        }
+
+        /* Mode Gelap */
+        body.dark-mode {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 800px;
+            width: 100%;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+            overflow-y: auto;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .shop-options {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .shop-card {
+            display: block;
+            text-decoration: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            width: 100%;
+            max-width: 300px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .shop-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .shop-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        body.light-mode .shop-card {
+            background: #fff;
+            color: #000;
+        }
+
+        body.dark-mode .shop-card {
+            background: #222;
+            color: #fff;
+        }
+
+        .shop-card img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        /* Tombol mode */
+        .mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            background: none;
+            z-index: 9999;
+            transition: transform 0.3s ease;
+        }
+
+        .mode-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .mode-toggle:active {
+            transform: scale(0.9);
+        }
+
+        body.light-mode .mode-toggle {
+            color: #000;
+        }
+
+        body.dark-mode .mode-toggle {
+            color: #fff;
+        }
+
+        /* Tombol GitHub */
+        .github-button {
+            position: fixed;
+            top: 70px; /* Positioned below the mode toggle */
+            right: 20px;
+            padding: 10px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            background: none;
+            z-index: 9999;
+            transition: transform 0.3s ease;
+        }
+
+        .github-button:hover {
+            transform: scale(1.1);
+        }
+
+        .github-button:active {
+            transform: scale(0.9);
+        }
+
+        body.light-mode .github-button {
+            color: #000;
+        }
+
+        body.dark-mode .github-button {
+            color: #fff;
+        }
+
+        /* Tombol Instagram */
+        .instagram-button {
+            position: fixed;
+            top: 120px; /* Positioned below the GitHub button */
+            right: 20px;
+            padding: 10px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            background: none;
+            z-index: 9999;
+            transition: transform 0.3s ease;
+        }
+
+        .instagram-button:hover {
+            transform: scale(1.1);
+        }
+
+        .instagram-button:active {
+            transform: scale(0.9);
+        }
+
+        body.light-mode .instagram-button {
+            color: #000;
+        }
+
+        body.dark-mode .instagram-button {
+            color: #fff;
+        }
+
+        /* Tombol Musik */
+        .music-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            background: none;
+            z-index: 9999;
+            transition: transform 0.3s ease;
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .music-toggle:active {
+            transform: scale(0.9);
+        }
+
+        body.light-mode .music-toggle {
+            color: #000;
+        }
+
+        body.dark-mode .music-toggle {
+            color: #fff;
+        }
+
+        /* Efek Hujan */
+        .rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .rain-drop {
+            position: absolute;
+            bottom: 100%;
+            width: 2px;
+            height: 50px;
+            animation: fall linear infinite;
+        }
+
+        body.light-mode .rain-drop {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        body.dark-mode .rain-drop {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* Marquee */
+        .marquee {
+            white-space: nowrap;
+            overflow: hidden;
+            box-sizing: border-box;
+            background: rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .marquee p {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 15s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* Loader */
+        .loader {
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #3498db;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 2s linear infinite;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Particles */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .particles div {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 5s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-100px) translateX(100px); }
+            100% { transform: translateY(0) translateX(0); }
+        }
+
+        /* Typing Animation */
+        #typing {
+            overflow: hidden;
+            border-right: .15em solid orange;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: orange; }
+        }
+
+        /* Video Background */
+        #bgVideo {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -1;
+        }
+
+        /* Parallax */
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100vh;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .shop-options {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .shop-card {
+                padding: 15px;
+            }
+
+            .mode-toggle, .music-toggle, .github-button, .instagram-button {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <button class="mode-toggle" id="modeToggle">🌙</button>
+    <a href="https://github.com/raffneptune" target="_blank" class="github-button" id="githubButton">
+        <i class="fab fa-github"></i>
+    </a>
+    <a href="https://instagram.com/raffneptune" target="_blank" class="instagram-button" id="instagramButton">
+        <i class="fab fa-instagram"></i>
+    </a>
+    <button class="music-toggle" id="musicToggle">▶️</button>
+
+    <audio id="backgroundMusic" loop>
+        <source src="audio/Foudeqush Ludwig Göransson - Con La Brisa.mp3" type="audio/mp3">
+        Browser Anda Tidak Support HTML5 Audio.
+    </audio>
+
+    <div class="rain"></div>
+    <div class="particles"></div>
+    <div class="marquee">
+        <p>nanaiii</p>
+    </div>
+    <div class="loader"></div>
+    <video autoplay muted loop id="bgVideo">
+        <source src="./assets/videos/21116-315137080_small.mp4" type="video/mp4">
+        Browser Anda Tidak Support HTML5 Video.
+    </video>
+    <div class="parallax" style="background-image: url('./assets/images/raffneptune.jpg');"></div>
+
+    <div class="container">
+        <h1 id="typing"></h1> 
+        <div class="shop-options">
+            <a href="love/love.html" class="shop-card">
+                <img src="image/love.png" alt="love">
+                <h2>love</h2>
+                <p>nanaiii</p>
+            </a>
+            <a href="flower/gift.html" class="shop-card">
+                <img src="image/flower.png" alt="flower">
+                <h2>bunga</h2>
+                <p>nanaiii</p>
+            </a>
+            <a href="ucapan/ucapan.html" class="shop-card">
+                <img src="image/ucapan.png" alt="ucapan">
+                <h2>ucapan</h2>
+                <p>nanaiii</p>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const body = document.body;
+            const modeButton = document.getElementById("modeToggle");
+            const musicButton = document.getElementById("musicToggle");
+            const audio = document.getElementById("backgroundMusic");
+
+            // Cek mode terakhir yang disimpan
+            if (localStorage.getItem("theme") === "dark") {
+                body.classList.remove("light-mode");
+                body.classList.add("dark-mode");
+                modeButton.textContent = "🌞";
+            }
+
+            // Toggle Mode Terang/Gelap
+            modeButton.addEventListener("click", function () {
+                if (body.classList.contains("dark-mode")) {
+                    body.classList.remove("dark-mode");
+                    body.classList.add("light-mode");
+                    modeButton.textContent = "🌙";
+                    localStorage.setItem("theme", "light");
+                } else {
+                    body.classList.remove("light-mode");
+                    body.classList.add("dark-mode");
+                    modeButton.textContent = "🌞";
+                    localStorage.setItem("theme", "dark");
+                }
+            });
+
+            // Play/Pause Musik
+            musicButton.addEventListener("click", function () {
+                if (audio.paused) {
+                    audio.play();
+                    musicButton.textContent = "⏸️";
+                } else {
+                    audio.pause();
+                    musicButton.textContent = "▶️";
+                }
+            });
+
+            // Efek hujan
+            const rainContainer = document.querySelector(".rain");
+            for (let i = 0; i < 100; i++) {
+                const rainDrop = document.createElement("div");
+                rainDrop.classList.add("rain-drop");
+                rainDrop.style.left = `${Math.random() * 100}%`;
+                rainDrop.style.animationDuration = `${Math.random() * 0.5 + 0.5}s`;
+                rainDrop.style.animationDelay = `${Math.random() * 2}s`;
+                rainContainer.appendChild(rainDrop);
+            }
+
+            // Scroll Reveal
+            const elements = document.querySelectorAll(".shop-card");
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            elements.forEach(element => {
+                observer.observe(element);
+            });
+
+            // Typing Animation
+            const text = "nanaiii";
+            let index = 0;
+
+            function type() {
+                if (index < text.length) {
+                    document.getElementById("typing").textContent += text.charAt(index);
+                    index++;
+                    setTimeout(type, 100);
+                }
+            }
+
+            type();
+
+            // Particles
+            const particlesContainer = document.querySelector(".particles");
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement("div");
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.animationDuration = `${Math.random() * 5 + 2}s`;
+                particlesContainer.appendChild(particle);
+            }
+
+            // Parallax Effect
+            window.addEventListener("scroll", function() {
+                const parallax = document.querySelector(".parallax");
+                let scrollPosition = window.pageYOffset;
+                parallax.style.backgroundPositionY = scrollPosition * 0.7 + "px"; // Sesuaikan kecepatan parallax di sini
+            });
+
+            // Hide Loader
+            window.addEventListener("load", function() {
+                const loader = document.querySelector(".loader");
+                loader.style.display = "none";
+            });
+        });
+    </script>
+</body>
+</html>
